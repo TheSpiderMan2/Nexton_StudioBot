@@ -471,4 +471,4 @@ ${user} Has been Banned From The Server By ${message.author.username}.`)
 
 
 
-client.login('BOT_TOKEN');
+client.login('token');
