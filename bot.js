@@ -5,7 +5,7 @@ const prefix = "^";
 
 
 client.on('ready', () => {
-client.user.setGame(`Trying To Develop This Bot To make it the Best ! :open_mouth: :fire:`,"https://www.twitch.tv/iDxolr")
+client.user.setGame(`Trying To Develop This Bot To make it the Best !`,"https://www.twitch.tv/iDxolr")
 });
 
 // Welcome message
