@@ -3,114 +3,106 @@ const client = new Discord.Client();
 
 const prefix = "^";
 
-// Activity System
 
-client.on("ready", () => { 
-  console.log('By : The_Dark'); client.user.setPresence({ 
-         status: 'online', 
-         game: { type: 0, name: 'Trying To Developing This Bot To Make it The Best',
-         details: `https://discord.gg/29KpKJy`, 
-         url: 'https://www.twitch.tv/BotDeveloping', 
-         state: `Deving & Coding`, 
-        application_id: '532682436471947264', 
-  
-        assets: { 
-  small_image: `535061300569571329`, 
-  
-  small_text: 'Developing Bot', 
-  large_image: `535061300569571329`, large_text: `Trying To Developing This Bot To Make it The Best !` } 
-  
-  } 
-  
-  }); 
-  });
+client.on('ready', () => {
+client.user.setGame(`Trying To Develop This Bot To make it the Best ! :open_mouth: :fire:`,"https://www.twitch.tv/iDxolr")
+});
 
-// Commands System
+// Welcome message
 
-client.on("message", message => {
-  if(message.content.startsWith(prefix + "schelp")){
-      if(!message.member.hasPermission('ADMINISTRATOR')) return message.channel.send('**You Need ``ADMINISTRATOR`` | :x:**');
-      const sch = new Discord.RichEmbed()
-      .setTitle("**Admin Commands | :clipboard:**")
-      .setDescription(`^Kick . To Kick a Person
-      -^Ban . To Ban a Person
-      -^close . You Can use it Only when you Finish Helping a Person
-      -^say . A Normal Command Can everyone Use it But Staff can use it To Like Type Announcement or etc..
-      -^clear . To Clear Chat But It's Not Allowed Without Reason,If you did it as a Fun it might Makes You Demoted
-      -^bc . You Can Use IT To Send Messages To all Members in the servers , But Not Adv(it Might Makes You Demoted).
-      -^mute . You Can use it When Some one Spam or insulting .
-      -^unmute . You Can use it To unmute Some one
-      Make Sure You Follow The Rules of Those Commands And More Will Be Comming Soon.`)
-      message.channel.sendEmbed(sch)
-  }
-})
+client.on('guildMemberAdd', member => {
+
+  const channel = member.guild.channels.find('name', 'welcome-bye');
+
+  const millis = new Date().getTime() - member.user.createdAt.getTime();
+  const now = new Date();
+  const createdAt = millis / 1000 / 60 / 60 / 24;
+
+
+
+
+
+  const embed = new Discord.RichEmbed()
+  
+  .setColor("black")
+  .setDescription(`**You Have Joined Discord Since ${createdAt.toFixed(0)} Day**`)
+  .setAuthor(member.user.tag, member.user.avatarURL);
+  channel.sendEmbed(embed);
+
+
+});
+
+
+
+
+
+
 
 
 
 client.on('message', message => {
 
     if (message.author.bot) return;
-
+  
     if (!message.content.startsWith(prefix)) return;
-
-
+  
+  
     let command = message.content.split(" ")[0];
-
+  
     command = command.slice(prefix.length);
-
-
+  
+  
     let args = message.content.split(" ").slice(1);
-
-
+  
+  
   // -say
-
-    if (command === "say") {
-
+  
+    if (command === "ssay") {
+  
             message.delete()
-
+  
       message.channel.sendMessage(args.join(" ")).catch(console.error);
-
+  
     }
-
-
-
-
-
-
+  
+    
+  
+   
+  
+  
   if (command == "embed") {
-
+  
       let say = new Discord.RichEmbed()
-
+  
       .setDescription(args.join(" "))
-
+  
       .setColor(0x23b2d6)
-
+  
       message.channel.sendEmbed(say);
-
+  
       message.delete();
-
+  
     }
-
-
-
+  
+  
+  
   });
 
 
-// Roles System
+
 
 client.on('message', message => {
     if (message.content === "^createroles") {
     if(!message.channel.guild) return message.channel.send('**This Command Only For Servers !**')
             if (!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send(`**${message.author.username} You Dont Have** ``MANAGE_ROLES`` **Premission**`);
 
-                     message.guild.createRole({ name: "", color: "#ffffff", permissions: [] })
-
+                     message.guild.createRole({ name: "-----ManagamentRoles-----", color: "#ffffff", permissions: [] })
 
 message.channel.sendMessage('**Please Wait While Creating The Roles**')
 }
 });
 
-// Colors System
+
 
 
 client.on('message', function(message) {
@@ -141,12 +133,12 @@ color: 'RANDOM'})
 
 
 
-// Ticket System
+
 
   client.on("message", (message) => {
-
-    if (message.content.startsWith("^new")) {
-         const reason = message.content.split(" ").slice(1).join(" ");
+ 
+    if (message.content.startsWith("^new")) {  
+         const reason = message.content.split(" ").slice(1).join(" ");  
          if (!message.guild.roles.exists("name", "Helpers Team")) return message.channel.send(`You Need To Make Role   \`Helpers Team\` And You Must Give The Bot Administrator Prem So he Can Create the tickets `);
          if (message.guild.channels.exists("name", "ticket-{message.author.id}" + message.author.id)) return message.channel.send(`You already have a ticket open.`);    /// ALPHA CODES
          message.guild.createChannel(`ticket-${message.author.username}`, "text").then(c => {
@@ -155,7 +147,7 @@ color: 'RANDOM'})
              c.overwritePermissions(role, {
                  SEND_MESSAGES: true,
                  READ_MESSAGES: true
-             });
+             });  
              c.overwritePermissions(role2, {
                  SEND_MESSAGES: false,
                  READ_MESSAGES: false
@@ -174,21 +166,21 @@ color: 'RANDOM'})
              });
          }).catch(console.error);
      }
-
-
+  
+  
    if (message.content.startsWith("&close")) {
          if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
-
+  
         message.channel.send(`Are You Sure That you want to close ticket? ^yes`)
             .then((m) => {
                 message.channel.awaitMessages(response => response.content === '^yes', {
                         max: 1,
                         time: 10000,
                         errors: ['time'],
-                    })
+                    })  
                     .then((collected) => {
                         message.channel.delete();
-                    })
+                    })  
                     .catch(() => {
                         m.edit('The CountDown of Closing the Ticket has been finished, The Ticket Still open').then(m2 => {
                             m2.delete();
@@ -196,12 +188,12 @@ color: 'RANDOM'})
                     });
             });
     }
-
+  
  });
 
 
 
-// Mute And UnMute System
+
 
 
 client.on('message', async message => {
@@ -315,7 +307,31 @@ if(message.content.startsWith(prefix + "mute")) {
 
 
 
-// Bc System
+client.on('message', message => {
+  var prefix = "!" // البريفكس
+  if(message.content.startsWith(prefix +"server")){ // الامر
+    if(!message.guild.member(message.author).hasPermission("ADMINISTRATOR")) return message.reply(`**هذه الخاصية للادارة فقط** ❎ `)
+  if(!message.channel.guild) return message.reply(' ');
+  const millis = new Date().getTime() - message.guild.createdAt.getTime();
+  const now = new Date();
+  dateFormat(now, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
+  const verificationLevels = ['None', 'Low', 'Medium', 'Insane', 'Extreme'];
+  const days = millis / 1000 / 60 / 60 / 24;
+  let roles = client.guilds.get(message.guild.id).roles.map(r => r.name);
+  var embed  = new Discord.RichEmbed()
+  .setAuthor(message.guild.name, message.guild.iconURL)
+  .addField("**🆔 Server ID:**", message.guild.id,true)
+  .addField("**📅 Created On**", message.guild.createdAt.toLocaleString(),true)
+  .addField("**👑 Owned by**",`${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`)
+  .addField("**👥 Members**",`[${message.guild.memberCount}]`,true)
+  .addField('**💬 Channels **',`**${message.guild.channels.filter(m => m.type === 'text').size}**` + ' text | Voice  '+ `**${message.guild.channels.filter(m => m.type === 'voice').size}** `,true)
+  .addField("**🌍 Others **" , message.guild.region,true)
+  .addField("**🔐 Roles **",`**[${message.guild.roles.size}]** Role `,true)
+  .setColor('#000000')
+  message.channel.sendEmbed(embed)
+  
+  }
+  });
 
   var fox = "By KillerFox";  // ممنوع اللمس
   var perfix = "By KillerFox";
@@ -350,7 +366,6 @@ if(message.content.startsWith(prefix + "mute")) {
   });
 
 
-  // Clear System
 
 client.on('message', msg => {
         if (msg.author.bot) return;
@@ -358,7 +373,7 @@ client.on('message', msg => {
         let command = msg.content.split(" ")[0];
         command = command.slice(prefix.length);
         let args = msg.content.split(" ").slice(1);
-
+       
           if(command === "clear") {
               const emoji = client.emojis.find("name", "wastebasket")
           let textxt = args.slice(0).join("");
@@ -371,104 +386,92 @@ client.on('message', msg => {
     msg.delete().then
     msg.channel.bulkDelete(textxt);
     msg.channel.send(" :white_check_mark: Messages Deleted.")
-        msg.channel.send("").then(m => m.delete(3000));
-      }
+        msg.channel.send("incidents").then(m => m.delete(3000));
+      }    
   }
 }
 });
 
+client.on('message' , message => {
+  if (message.author.dark) return;
+  if (!message.content.startsWith(prefix)) return;
 
+  let command = message.content.split(" ")[0];
+  command = command.slice(prefix.length);
 
-//Suggestion System
+  let args = message.content.split(" ").slice(1);
 
-client.on('message', message => {
-  if (message.content.startsWith(prefix + 'sug')) {
-      if (message.author.bot) return
-      if (!message.guild) return message.reply('**:x: This Commands Just In Server**').then(v => {v.react('❌')})
-      var args =  message.content.split(' ').slice(1).join(' ')
-      if (!args) return message.reply('Type You Suggestion').then(c => {c.delete(5000)})
-      let Room = message.guild.channels.find(`name`, "suggestions")
-      if (!Room) return message.channel.send("Can't find suggestions channel.").then(d => d.react('❌'))
-      let embed = new Discord.RichEmbed()
-      .setColor('RANDOM')
-      .setAuthor(`Vote on ${message.author.username}'s suggestion`, message.author.avatarURL)
-     .addField('**Suggestion**',`${args}`)
-     .setThumbnail(message.author.avatarURL)
-     .setFooter(`ID: ${message.author.id}`)
-     Room.sendEmbed(embed).then(c => {
-         c.react('✅').then(() => 
-             c.react('❌'))
+  if (command == "ban") {
+               if(!message.channel.guild) return message.reply('** This command only for servers**');
+         
+  if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.reply("**You Don't Have ` BAN_MEMBERS ` Permission**");
+  if(!message.guild.member(client.user).hasPermission("BAN_MEMBERS")) return message.reply("**I Don't Have ` BAN_MEMBERS ` Permission**");
+  let user = message.mentions.users.first();
+  let reason = message.content.split(" ").slice(2).join(" ");
+      /*let banlog = client.channels.find("name", "ban-log");
+  if(!banlog) return message.reply("I've detected that this server doesn't have a ban-log text channel.");*/
+  if (message.mentions.users.size < 1) return message.reply("**Please Metion The user**");
+  if(!reason) return message.reply ("**Type The Reason Please**");
+  if (!message.guild.member(user)
+  .bannable) return message.reply("**i Can't Ban A User That Had A hight Role More Then Me**");
 
-     }).catch(e => console.error(e)
+  message.guild.member(user).ban(7, user);
+  message.channel.sendMessage("**:white_check_mark: Success Banned** ✅");
+}
+});
+
+client.on('message', message => {//Mrx - Dev
+  if (message.content.startsWith(prefix + 'sug')) {//Mrx - Dev
+      if (message.author.bot) return//Mrx - Dev
+      if (!message.guild) return message.reply('**:x: This Commands Just In Server**').then(v => {v.react('❌')})//Mrx - Dev
+      var args =  message.content.split(' ').slice(1).join(' ')//Mrx - Dev
+      if (!args) return message.reply('Type You Suggestion').then(c => {c.delete(5000)})//Mrx - Dev
+      let Room = message.guild.channels.find(`name`, "suggestions")//Mrx - Dev
+      if (!Room) return message.channel.send("Can't find suggestions channel.").then(d => d.react('❌'))//Mrx - Dev
+      let embed = new Discord.RichEmbed()//Mrx - Dev
+      .setColor('RANDOM')//Mrx - Dev
+      .setAuthor(`Vote on ${message.author.username}'s suggestion`, message.author.avatarURL)//Mrx - Dev
+     .addField('**Suggestion**',`${args}`)//Mrx - Dev
+     .setThumbnail(message.author.avatarURL)//Mrx - Dev
+     .setFooter(`ID: ${message.author.id}`)//Mrx - Dev
+     Room.sendEmbed(embed).then(c => {//Mrx - Dev
+         c.react('✅').then(() => //Mrx - Dev
+             c.react('❌'))//Mrx - Dev
+         
+     }).catch(e => console.error(e)//Mrx - Dev
      )
- }
-});
+ }//Mrx - Dev
+});//Mrx - Dev
 
 
 
 
 
 
-
-
- // Verify System 
-
-client.on("message", message => {
-  if(message.content.startsWith("^verify")) { // الامر والبريفكس
-    let num = Math.floor((Math.random() * 4783) + 10);
- 
-        message.channel.send(`**Please Enter this number to verify : ** **${num}**`).then(m => {
-      message.channel.awaitMessages(res => res.content == `${num}`, {
-        max: 1,
-        time: 60000,
-        errors: ['time'],
-      }).then(collected => {
-        message.delete();
-        m.delete();
-        message.member.addRole(message.guild.roles.find(c  => c.name == "Fan")); // اسم الرتبة
-      }).catch(() => {
-        m.edit(`:x: **You take too match time to enter the number. Please submmite the command again.**`).then(m2 => m.delete(15000));
-      });
-    });
-  }
-});
-
-// Kick System
 
 client.on('message', message => {
-  if(message.content.startsWith(prefix + "kick")){
-       let args = message.content.split(" ").slice(1);
-       if(!message.guild.member(message.author).hasPermission("KICK_MEMBERS")) return message.reply("**You Need ``KICK_MEMBERS`` | :x:**")
-       if(!message.guild.member(client.user).hasPermission("KICK_MEMBERS")) return message.reply("**Bot Need ``KICK_MEMBERS`` | :x:**")
-       let user = message.mentions.users.first();
-       if (message.mentions.users.size < 1) return message.reply('**Mention Member First | :x:**')
-       if (!message.guild.member(user)
-       .bannable) return message.reply("**i Can't Kick This Member | :x:**")
-       message.guild.member(user).kick(7, user);
-     message.channel.send(`**${user.tag} Kicked From Server | :white_check_mark:**`)
-     let chh = message.guild.channels.find("name","incidents").send(`
-     ${user} Has been Kicked From The Server By ${message.author.username}.`)
-  }
-  });
-
-// Ban System
-
-  client.on('message', message => {
-    if(message.content.startsWith(prefix + "ban")){
-         let args = message.content.split(" ").slice(1);
-         if(!message.guild.member(message.author).hasPermission("BAN_MEMBERS")) return message.reply("**You Need ``BAN_MEMBERS`` | :x:**")
-         if(!message.guild.member(client.user).hasPermission("BAN_MEMBERS")) return message.reply("**Bot Need ``BAN_MEMBERS`` | :x:**")
-         let user = message.mentions.users.first();
-         if (message.mentions.users.size < 1) return message.reply('**Mention Member First | :x:**')
-         if (!message.guild.member(user)
-         .bannable) return message.reply("**i Can't Ban This Member | :white_check_mark:**")
-         message.guild.member(user).ban(7, user);
-       message.channel.send(`**${user.tag} Kicked From Server | :mans_shoe:**`)
-                let chh = message.guild.channels.find("name","incidents").send(`
-${user} Has been Banned From The Server By ${message.author.username}.`)
-    }
-    });
-
+  if (message.content.includes('discord.gg')){
+                      if(!message.channel.guild) return message.reply ('')
+                  if (!message.member.hasPermissions(['MANAGE_MESSAGES'])){
+     message.channel.send('kick <@' + message.author.id + '>')
+     message.delete() 
+     } /////////////// Galal , ALPHA CODES
+  } /////////////// Galal , ALPHA CODES
+        if (message.content.startsWith("kick")) {
+           if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply();
+           var member= message.mentions.members.first();
+           member.kick().then((member) => {
+               message.channel.sendMessage("", {embed: {
+               author: {  /////////////// Galal , ALPHA CODES
+               },  /////////////// Galal , ALPHA CODES
+               title: 'For Adv'  + member.displayName + ' Kicked', 
+               color: 490101,
+               }
+             });
+         }  /////////////// Galal , ALPHA CODES
+       ) 
+     }  /////////////// Galal , ALPHA CODES
+ });  /////////////// Galal , ALPHA CODES
 
 
 client.login(process.env.BOT_TOKEN);
