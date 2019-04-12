@@ -1,11 +1,16 @@
+// Source
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const prefix = "^"
+client.on('ready', () => {
+  console.log(`Logged in as [ ${client.user.tag}! ]`);
+  console.log('[           BOT IS ONLINE         ]') 
+});
 
-const prefix = "^";
-
+// Activity 
 
 client.on('ready', () => {
-client.user.setGame(`Trying To Develop This Bot To make it the Best !`,"https://www.twitch.tv/iDxolr")
+client.user.setGame(`Trying To Develop This Bot To make it the Best ! :open_mouth: :fire:`,"https://www.twitch.tv/iDxolr")
 });
 
 // Welcome message
@@ -22,7 +27,7 @@ client.on('guildMemberAdd', member => {
 
 
 
-  const embed = new Discord.RichEmbed()
+  const embed = new Dicord.RichEmbed()
   
   .setColor("black")
   .setDescription(`**You Have Joined Discord Since ${createdAt.toFixed(0)} Day**`)
@@ -33,12 +38,40 @@ client.on('guildMemberAdd', member => {
 });
 
 
+// Admin Commands Help
 
+client.on("message", message => {
+  if(message.content.startsWith("^schelp")){
+  const embed = new Discord.RichEmbed()
+  .setTitle("**Admin Commands  |:clipboard:**")
+  .setDescription(`-^Ban . To Ban a Person
+  -^close . You Can use it Only when you Finish Helping a Person
+  -^say . A Normal Command Can everyone Use it But Staff can use it To Like Type Announcement or etc..
+  -^clear . To Clear Chat But It's Not Allowed Without Reason,If you did it as a Fun it might Makes You Demoted
+  -^bc . You Can Use IT To Send Messages To all Members in the servers , But Not Adv(it Might Makes You Demoted).
+  -^mute . You Can use it When Some one Spam or insulting .
+  -^unmute . You Can use it To unmute Some one
+  Make Sure You Follow The Rules of Those Commands And More Will Be Comming Soon.`)
+  .setFooter("Developed By The_Dark#6320")
+  message.author.sendEmbed(embed)
+  }
+  });
 
+// Normal commands
 
+client.on("message",message => {
+  if(message.content.startsWith("^help")){
+  const embed = new Discord.RichEmbed()
+  .setTitle("**Normal Commands |:clipboard:**")
+  .setDescription(`^ping . To Check Your Ping
+  -^avatar .You Can Use it To Check Your Avatar
+  -^id .You Can Use it To Show Your ID in Discord
+  -^ch_id .You Can Use it TO Check Your ID But idk what kind of id but nvm :joy:`)
+  message.author.sendEmbed(embed)
+  }
+});
 
-
-
+// Say Code
 
 client.on('message', message => {
 
@@ -57,7 +90,7 @@ client.on('message', message => {
   
   // -say
   
-    if (command === "ssay") {
+    if (command === "say") {
   
             message.delete()
   
@@ -132,7 +165,7 @@ color: 'RANDOM'})
 });
 
 
-
+// Ticket System
 
 
   client.on("message", (message) => {
@@ -168,7 +201,7 @@ color: 'RANDOM'})
      }
   
   
-   if (message.content.startsWith("&close")) {
+   if (message.content.startsWith("^close")) {
          if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
   
         message.channel.send(`Are You Sure That you want to close ticket? ^yes`)
@@ -192,7 +225,7 @@ color: 'RANDOM'})
  });
 
 
-
+// mute And unmute system
 
 
 
@@ -307,31 +340,7 @@ if(message.content.startsWith(prefix + "mute")) {
 
 
 
-client.on('message', message => {
-  var prefix = "!" // البريفكس
-  if(message.content.startsWith(prefix +"server")){ // الامر
-    if(!message.guild.member(message.author).hasPermission("ADMINISTRATOR")) return message.reply(`**هذه الخاصية للادارة فقط** ❎ `)
-  if(!message.channel.guild) return message.reply(' ');
-  const millis = new Date().getTime() - message.guild.createdAt.getTime();
-  const now = new Date();
-  dateFormat(now, 'dddd, mmmm dS, yyyy, h:MM:ss TT');
-  const verificationLevels = ['None', 'Low', 'Medium', 'Insane', 'Extreme'];
-  const days = millis / 1000 / 60 / 60 / 24;
-  let roles = client.guilds.get(message.guild.id).roles.map(r => r.name);
-  var embed  = new Discord.RichEmbed()
-  .setAuthor(message.guild.name, message.guild.iconURL)
-  .addField("**🆔 Server ID:**", message.guild.id,true)
-  .addField("**📅 Created On**", message.guild.createdAt.toLocaleString(),true)
-  .addField("**👑 Owned by**",`${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`)
-  .addField("**👥 Members**",`[${message.guild.memberCount}]`,true)
-  .addField('**💬 Channels **',`**${message.guild.channels.filter(m => m.type === 'text').size}**` + ' text | Voice  '+ `**${message.guild.channels.filter(m => m.type === 'voice').size}** `,true)
-  .addField("**🌍 Others **" , message.guild.region,true)
-  .addField("**🔐 Roles **",`**[${message.guild.roles.size}]** Role `,true)
-  .setColor('#000000')
-  message.channel.sendEmbed(embed)
-  
-  }
-  });
+// BroadCast Code
 
   var fox = "By KillerFox";  // ممنوع اللمس
   var perfix = "By KillerFox";
@@ -366,6 +375,7 @@ client.on('message', message => {
   });
 
 
+// Clear Code
 
 client.on('message', msg => {
         if (msg.author.bot) return;
@@ -392,6 +402,7 @@ client.on('message', msg => {
 }
 });
 
+// Ban Code
 client.on('message' , message => {
   if (message.author.dark) return;
   if (!message.content.startsWith(prefix)) return;
@@ -420,6 +431,9 @@ client.on('message' , message => {
 }
 });
 
+
+// suggestion Command
+
 client.on('message', message => {//Mrx - Dev
   if (message.content.startsWith(prefix + 'sug')) {//Mrx - Dev
       if (message.author.bot) return//Mrx - Dev
@@ -446,32 +460,6 @@ client.on('message', message => {//Mrx - Dev
 
 
 
-
-
-
-client.on('message', message => {
-  if (message.content.includes('discord.gg')){
-                      if(!message.channel.guild) return message.reply ('')
-                  if (!message.member.hasPermissions(['MANAGE_MESSAGES'])){
-     message.channel.send('kick <@' + message.author.id + '>')
-     message.delete() 
-     } /////////////// Galal , ALPHA CODES
-  } /////////////// Galal , ALPHA CODES
-        if (message.content.startsWith("kick")) {
-           if(!message.member.hasPermission('ADMINISTRATOR')) return message.reply();
-           var member= message.mentions.members.first();
-           member.kick().then((member) => {
-               message.channel.sendMessage("", {embed: {
-               author: {  /////////////// Galal , ALPHA CODES
-               },  /////////////// Galal , ALPHA CODES
-               title: 'For Adv'  + member.displayName + ' Kicked', 
-               color: 490101,
-               }
-             });
-         }  /////////////// Galal , ALPHA CODES
-       ) 
-     }  /////////////// Galal , ALPHA CODES
- });  /////////////// Galal , ALPHA CODES
 
 
 client.login(process.env.BOT_TOKEN);
