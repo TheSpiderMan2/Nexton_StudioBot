@@ -71,6 +71,38 @@ client.on("message",message => {
   }
 });
 
+
+
+// one of normal commands
+
+client.on('message', msg => { ///////////// Galal , ALPHA CODES 
+
+  const at_reply = ('<@' + msg.author.id + '>  '); ///////////// Galal , ALPHA CODES 
+
+  if (msg.author.bot) return; ///////////// Galal , ALPHA CODES 
+
+  if (msg.content === prefix + 'ping') { ///////////// Galal , ALPHA CODES 
+      msg.channel.send(at_reply + 'pong  ' + `${ Math.round(client.ping) }` + 'ms' + ':white_check_mark:');
+      console.log('pong  ' + `${ Math.round(client.ping) }` + 'ms');
+  };
+ 
+  if (msg.content === prefix + 'avatar') { ///////////// Galal , ALPHA CODES 
+      msg.channel.send(at_reply + msg.author.avatarURL); ///////////// Galal , ALPHA CODES 
+  };
+
+  if (msg.content === prefix + 'id') { ///////////// Galal , ALPHA CODES  
+      msg.channel.send(at_reply + msg.author.id); ///////////// Galal , ALPHA CODES 
+  };
+
+  if (msg.content === prefix + 'ch_id') { ///////////// Galal , ALPHA CODES 
+      msg.channel.send(at_reply + msg.channel.name + '  ' + '<' + msg.channel.id + '>'); ///////////// Galal , ALPHA CODES 
+  }; ///////////// Galal , ALPHA CODES 
+ 
+}); ///////////// Galal , ALPHA CODES 
+
+
+
+
 // Say Code
 
 client.on('message', message => {
