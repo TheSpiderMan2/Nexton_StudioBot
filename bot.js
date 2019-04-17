@@ -10,7 +10,7 @@ client.on('ready', () => {
 // Activity 
 
 client.on('ready', () => {
-client.user.setGame(`Trying To Develop This Bot To make it the Best ! :open_mouth: :fire:`,"https://www.twitch.tv/iDxolr")
+client.user.setGame(`Trying To Develop This Bot To make it the Best !`,"https://www.twitch.tv/iDxolr")
 });
 
 // Welcome message
@@ -104,7 +104,7 @@ client.on('message', msg => { ///////////// Galal , ALPHA CODES
 
 //role System
 // Note i stopped here translating
-!! sadasdsafas fvs ValidityState;
+
 client.on("message", message => {
   var args = message.content.split(' ').slice(1); 
   var msg = message.content.toLowerCase();
@@ -551,6 +551,7 @@ client.on('message', message => {//Mrx - Dev
      )
  }//Mrx - Dev
 });//Mrx - Dev
+
 
 
 
