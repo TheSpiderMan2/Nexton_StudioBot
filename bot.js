@@ -44,6 +44,7 @@ client.on("message", message => {
   if(message.content.startsWith("^schelp")){
   const embed = new Discord.RichEmbed()
   .setTitle("**Admin Commands  |:clipboard:**")
+  .setColor('RANDOM')
   .setDescription(`-^Ban . To Ban a Person
   -^close . You Can use it Only when you Finish Helping a Person
   -^say . A Normal Command Can everyone Use it But Staff can use it To Like Type Announcement or etc..
@@ -63,6 +64,7 @@ client.on("message",message => {
   if(message.content.startsWith("^help")){
   const embed = new Discord.RichEmbed()
   .setTitle("**Normal Commands |:clipboard:**")
+  .setColor('RANDOM')
   .setDescription(`^ping . To Check Your Ping
   -^avatar .You Can Use it To Check Your Avatar
   -^id .You Can Use it To Show Your ID in Discord
@@ -99,6 +101,67 @@ client.on('message', msg => { ///////////// Galal , ALPHA CODES
   }; ///////////// Galal , ALPHA CODES 
  
 }); ///////////// Galal , ALPHA CODES 
+
+//role System
+// Note i stopped here translating
+!! sadasdsafas fvs ValidityState;
+client.on("message", message => {
+  var args = message.content.split(' ').slice(1); 
+  var msg = message.content.toLowerCase();
+  if( !message.guild ) return;
+  if( !msg.startsWith( prefix + 'role' ) ) return;
+  if( msg.toLowerCase().startsWith( prefix + 'roleremove' ) ){
+    if( !args[0] ) return message.reply( '**Please Metion The User That You Want To Take off The Roles From him :x:**' );
+    if( !args[1] ) return message.reply( '**Please Metion The User That You Want To Take off The Roles From him :x:**' );
+    var role = msg.split(' ').slice(2).join(" ").toLowerCase(); 
+    var role1 = message.guild.roles.filter( r=>r.name.toLowerCase().indexOf(role)>-1 ).first(); 
+    if( !role1 ) return message.reply( '**Please Put The Role That you Want To Take off it From The user :x:**' );if( message.mentions.members.first() ){
+      message.mentions.members.first().removeRole( role1 );
+      return messsage.reply('**Role ['+role1.name+'] Has Been Removed From [ '+args[0]+'] :white_check_mark:**');
+      
+    }
+    if( args[0].toLowerCase() == "all" ){
+      message.guild.members.forEach(m=>m.removeRole( role1 ))
+      return	message.reply('**:white_check_mark: [ '+role1.name+' ] تم سحب من الكل رتبة**');
+    } else if( args[0].toLowerCase() == "bots" ){
+      message.guild.members.filter(m=>m.user.bot).forEach(m=>m.removeRole(role1))
+      return	message.reply('**:white_check_mark: [ '+role1.name+' ] تم سحب من البوتات رتبة**');
+    } else if( args[0].toLowerCase() == "humans" ){
+      message.guild.members.filter(m=>!m.user.bot).forEach(m=>m.removeRole(role1))
+      return	message.reply('**:white_check_mark: [ '+role1.name+' ] تم سحب من البشريين رتبة**');
+    } 	
+  } else {
+    if( !args[0] ) return message.reply( '**:x: يرجى وضع الشخص المراد اعطائها الرتبة**' );
+    if( !args[1] ) return message.reply( '**:x: يرجى وضع الرتبة المراد اعطائها للشخص**' );
+    var role = msg.split(' ').slice(2).join(" ").toLowerCase(); 
+    var role1 = message.guild.roles.filter( r=>r.name.toLowerCase().indexOf(role)>-1 ).first(); 
+    if( !role1 ) return message.reply( '**:x: يرجى وضع الرتبة المراد اعطائها للشخص**' );if( message.mentions.members.first() ){
+      message.mentions.members.first().addRole( role1 );
+      return message.reply('**:white_check_mark: [ '+role1.name+' ] رتبة [ '+args[0]+' ] تم اعطاء **');
+    }
+    if( args[0].toLowerCase() == "all" ){
+      message.guild.members.forEach(m=>m.addRole( role1 ))
+      return	message.reply('**:white_check_mark: [ '+role1.name+' ] تم اعطاء الكل رتبة**');
+    } else if( args[0].toLowerCase() == "bots" ){
+      message.guild.members.filter(m=>m.user.bot).forEach(m=>m.addRole(role1))
+      return	message.reply('**:white_check_mark: [ '+role1.name+' ] تم اعطاء البوتات رتبة**');
+    } else if( args[0].toLowerCase() == "humans" ){
+      message.guild.members.filter(m=>!m.user.bot).forEach(m=>m.addRole(role1))
+      return	message.reply('**:white_check_mark: [ '+role1.name+' ] تم اعطاء البشريين رتبة**');
+    } 
+  } 
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -488,6 +551,13 @@ client.on('message', message => {//Mrx - Dev
      )
  }//Mrx - Dev
 });//Mrx - Dev
+
+
+
+
+
+
+
 
 
 
